@@ -1,0 +1,174 @@
+{
+  "source_digest": "d482727b1abc3fd62d8911260b6140da95d88975b046bb369e448a95c7d4d3ed",
+  "mode": "live",
+  "model": "deepseek-flash",
+  "generated_at_utc": "2026-10-28T11:13:57.353182+00:00",
+  "python": "3.13.7",
+  "source_commit": "1eeda8574ca2d7db77937081a7b980b702073d67",
+  "scope": "observable checks; human semantic review is still required",
+  "distinct_observation_paths": true,
+  "human_semantic_review": "not_recorded",
+  "cases": [
+    {
+      "case": "01_normal",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "answer_contains_expected_deadline": true,
+        "answer_has_evidence": true
+      },
+      "passed": true,
+      "trace": "01_normal.json"
+    },
+    {
+      "case": "02_conflict",
+      "expected_status": "needs_clarification",
+      "actual_status": "needs_clarification",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "both_conflicting_sources_read_and_cited": true,
+        "both_deadlines_present": true,
+        "missing_scope_reported": true
+      },
+      "passed": true,
+      "trace": "02_conflict.json"
+    },
+    {
+      "case": "03_out_of_scope",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "insufficient_evidence",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "no_unsupported_citations": true,
+        "gap_reported": true
+      },
+      "passed": true,
+      "trace": "03_out_of_scope.json"
+    },
+    {
+      "case": "04_paraphrase",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "answer_contains_expected_deadline": true,
+        "answer_has_evidence": true
+      },
+      "passed": true,
+      "trace": "04_paraphrase.json"
+    },
+    {
+      "case": "05_follow_up",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "answer_contains_expected_deadline": true,
+        "answer_has_evidence": true
+      },
+      "passed": true,
+      "trace": "05_follow_up.json"
+    },
+    {
+      "case": "06_search_recovery",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "answer_contains_expected_deadline": true,
+        "answer_has_evidence": true,
+        "failure_actually_observed": true,
+        "action_after_failure": true
+      },
+      "passed": true,
+      "trace": "06_search_recovery.json"
+    },
+    {
+      "case": "07_read_failure",
+      "expected_status": "tool_error",
+      "actual_status": "tool_error",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "no_unsupported_citations": true,
+        "gap_reported": true,
+        "failure_actually_observed": true,
+        "action_after_failure": true
+      },
+      "passed": true,
+      "trace": "07_read_failure.json"
+    },
+    {
+      "case": "08_step_limit",
+      "expected_status": "incomplete",
+      "actual_status": "incomplete",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "incomplete_is_explicit": true
+      },
+      "passed": true,
+      "trace": "08_step_limit.json"
+    },
+    {
+      "case": "09_missing_context",
+      "expected_status": "needs_clarification",
+      "actual_status": "needs_clarification",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "no_unsupported_citations": false,
+        "gap_reported": true
+      },
+      "passed": false,
+      "trace": "09_missing_context.json"
+    },
+    {
+      "case": "10_document_changed",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "answer_contains_expected_deadline": true,
+        "answer_has_evidence": true
+      },
+      "passed": true,
+      "trace": "10_document_changed.json"
+    },
+    {
+      "case": "11_conflict_resolved",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "checks": {
+        "status_matches": true,
+        "within_step_limit": true,
+        "citations_verified": true,
+        "answer_contains_expected_deadline": true,
+        "answer_has_evidence": true,
+        "both_candidate_originals_read": true
+      },
+      "passed": true,
+      "trace": "11_conflict_resolved.json"
+    }
+  ],
+  "passed": 10,
+  "total": 11
+}

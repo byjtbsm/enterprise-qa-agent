@@ -1,0 +1,19 @@
+{
+  "provenance": "Summary of user-supplied actual console result; not reproduced in this environment.",
+  "scenario": "Normal corpus: search succeeded, next model response could not be parsed",
+  "reported_result": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "status": "model_error",
+    "steps": 2,
+    "tool_calls": 1,
+    "first_action": "search",
+    "query": "报销期限",
+    "search_hit": "D01",
+    "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。",
+    "first_response_id": "26bce9a5-7f68-44af-8252-f66fae90e20d",
+    "second_step_error": "model_invalid_response"
+  },
+  "root_cause_status": "Exact invalid-response category cannot be inferred from the old log. New parser and diagnostics distinguish categories.",
+  "external_fix_verified": false
+}

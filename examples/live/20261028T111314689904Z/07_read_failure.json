@@ -1,0 +1,173 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "报销期限是多少？",
+  "history": [],
+  "status": "tool_error",
+  "answer": "读取报销制度原文的工具连续失败，无法核实制度原文，因此暂时不能给出报销期限的准确答复。检索预览显示可能存在30天的规定，但未读取原文，不能作为结论。",
+  "citations": [],
+  "gaps": [
+    "D01《员工费用报销制度 A》原文无法读取",
+    "报销期限的准确规定及适用范围未能核实"
+  ],
+  "steps": 5,
+  "max_steps": 10,
+  "tool_calls": 4,
+  "model_calls": [
+    {
+      "step": 1,
+      "http_status": 200,
+      "response_bytes": 585,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "c496ce8f-d88e-4a0d-a804-c28a147fedaa",
+      "usage": {
+        "prompt_tokens": 545,
+        "completion_tokens": 25,
+        "total_tokens": 570
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 2,
+      "http_status": 200,
+      "response_bytes": 584,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "93f13efc-9e38-4e67-8e31-41ebe36e0d2c",
+      "usage": {
+        "prompt_tokens": 665,
+        "completion_tokens": 31,
+        "total_tokens": 696
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 3,
+      "http_status": 200,
+      "response_bytes": 575,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "2482951b-06e8-43c1-9feb-84552148cb0d",
+      "usage": {
+        "prompt_tokens": 723,
+        "completion_tokens": 32,
+        "total_tokens": 755
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 4,
+      "http_status": 200,
+      "response_bytes": 563,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "cc44829b-cf06-463f-b5b5-51c20ffa7742",
+      "usage": {
+        "prompt_tokens": 782,
+        "completion_tokens": 28,
+        "total_tokens": 810
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 5,
+      "http_status": 200,
+      "response_bytes": 983,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "8ff8e811-93d8-4784-b643-01295c904b96",
+      "usage": {
+        "prompt_tokens": 837,
+        "completion_tokens": 112,
+        "total_tokens": 949
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "duration_ms": 5405.22,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "报销期限"
+      },
+      "reason": "问题涉及报销事项，先检索相关制度",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "读取报销制度原文核实期限及适用条件",
+      "observation": {
+        "ok": false,
+        "error": "injected_tool_failure",
+        "retryable": true
+      }
+    },
+    {
+      "step": 3,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "工具失败可重试，重试读取原文",
+      "observation": {
+        "ok": false,
+        "error": "injected_tool_failure",
+        "retryable": true
+      }
+    },
+    {
+      "step": 4,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "再次重试读取原文核实",
+      "observation": {
+        "ok": false,
+        "error": "injected_tool_failure",
+        "retryable": true
+      }
+    },
+    {
+      "step": 5,
+      "action": "finish",
+      "args": {
+        "status": "tool_error",
+        "answer": "读取报销制度原文的工具连续失败，无法核实制度原文，因此暂时不能给出报销期限的准确答复。检索预览显示可能存在30天的规定，但未读取原文，不能作为结论。",
+        "citations": [],
+        "gaps": [
+          "D01《员工费用报销制度 A》原文无法读取",
+          "报销期限的准确规定及适用范围未能核实"
+        ]
+      },
+      "reason": "连续相同工具失败，如实以工具错误结束",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "corpus/normal.json",
+    "sha256": "4618419c1c146896c813343ad56d9f6871515cb651eb0c1d80e1ec2350cb1db0",
+    "failures": {
+      "read": 100
+    },
+    "max_steps": 10
+  }
+}

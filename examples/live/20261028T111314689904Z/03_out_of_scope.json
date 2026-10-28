@@ -1,0 +1,134 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "公司停车位如何分配？",
+  "history": [],
+  "status": "insufficient_evidence",
+  "answer": "现有制度资料中未检索到关于公司停车位分配的规定，无法回答该问题。",
+  "citations": [],
+  "gaps": [
+    "缺少停车位分配/车辆停放管理相关制度文件"
+  ],
+  "steps": 4,
+  "max_steps": 10,
+  "tool_calls": 3,
+  "model_calls": [
+    {
+      "step": 1,
+      "http_status": 200,
+      "response_bytes": 586,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "35646b42-a1a0-46ce-993b-a5dae4dc2947",
+      "usage": {
+        "prompt_tokens": 547,
+        "completion_tokens": 27,
+        "total_tokens": 574
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 2,
+      "http_status": 200,
+      "response_bytes": 603,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "fadc9e25-8d49-4646-bf7b-d84a91737d3e",
+      "usage": {
+        "prompt_tokens": 600,
+        "completion_tokens": 35,
+        "total_tokens": 635
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 3,
+      "http_status": 200,
+      "response_bytes": 585,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "6b163b80-d264-4f30-a2a9-ed94483b7579",
+      "usage": {
+        "prompt_tokens": 656,
+        "completion_tokens": 27,
+        "total_tokens": 683
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 4,
+      "http_status": 200,
+      "response_bytes": 813,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "7683ca0f-9c8b-47a8-b2ca-f74dbb4ed24f",
+      "usage": {
+        "prompt_tokens": 704,
+        "completion_tokens": 81,
+        "total_tokens": 785
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "duration_ms": 4602.81,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "停车位 分配"
+      },
+      "reason": "先检索现有制度中停车位分配规则",
+      "observation": {
+        "ok": true,
+        "hits": [],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "search",
+      "args": {
+        "query": "车位 车辆 停放 管理"
+      },
+      "reason": "首次检索无结果，改写关键词再查",
+      "observation": {
+        "ok": true,
+        "hits": [],
+        "truncated": false
+      }
+    },
+    {
+      "step": 3,
+      "action": "search",
+      "args": {
+        "query": "停车"
+      },
+      "reason": "进一步放宽关键词检索停车相关制度",
+      "observation": {
+        "ok": true,
+        "hits": [],
+        "truncated": false
+      }
+    },
+    {
+      "step": 4,
+      "action": "finish",
+      "args": {
+        "status": "insufficient_evidence",
+        "answer": "现有制度资料中未检索到关于公司停车位分配的规定，无法回答该问题。",
+        "citations": [],
+        "gaps": [
+          "缺少停车位分配/车辆停放管理相关制度文件"
+        ]
+      },
+      "reason": "多次检索均无相关制度，资料缺口明确",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "corpus/documents.json",
+    "sha256": "64dfca9179a14f2d159c7b21d6bcd0143cbd0806acb2ffd6879859439d1ecddb",
+    "failures": {},
+    "max_steps": 10
+  }
+}

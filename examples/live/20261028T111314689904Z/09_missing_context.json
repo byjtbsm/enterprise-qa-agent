@@ -1,0 +1,179 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "期限是多久？",
+  "history": [],
+  "status": "needs_clarification",
+  "answer": "关于报销期限，现有两份制度规定不一致：制度 A（2026-01-01）规定“报销期限为费用发生后30天”；制度 B（2026-03-01）规定“报销期限为费用发生后15天”。两份文档均标注“适用部门与优先级尚未提供”，无法判断应适用哪一份。请补充您所属部门或明确适用的制度版本/优先级，我再为您确认具体期限。",
+  "citations": [
+    {
+      "doc_id": "D01",
+      "quote": "报销期限为费用发生后30天。"
+    },
+    {
+      "doc_id": "D02",
+      "quote": "报销期限为费用发生后15天。"
+    }
+  ],
+  "gaps": [
+    "缺少所属部门或适用制度版本/优先级信息，无法在冲突规定中确定适用期限"
+  ],
+  "steps": 4,
+  "max_steps": 10,
+  "tool_calls": 3,
+  "model_calls": [
+    {
+      "step": 1,
+      "http_status": 200,
+      "response_bytes": 609,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "19b60202-da24-454c-8560-a41078d9d9eb",
+      "usage": {
+        "prompt_tokens": 545,
+        "completion_tokens": 30,
+        "total_tokens": 575
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 2,
+      "http_status": 200,
+      "response_bytes": 584,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "37ab33ec-fbee-4f2a-941d-8530dc784e45",
+      "usage": {
+        "prompt_tokens": 738,
+        "completion_tokens": 30,
+        "total_tokens": 768
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 3,
+      "http_status": 200,
+      "response_bytes": 593,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "c15ca103-c106-4f2a-a59f-cdb2b79366df",
+      "usage": {
+        "prompt_tokens": 841,
+        "completion_tokens": 33,
+        "total_tokens": 874
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 4,
+      "http_status": 200,
+      "response_bytes": 1350,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "dc492f7c-244f-4370-865a-96e645b45241",
+      "usage": {
+        "prompt_tokens": 947,
+        "completion_tokens": 207,
+        "total_tokens": 1154
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "duration_ms": 4431.95,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "期限"
+      },
+      "reason": "问题未指明业务事项，先做有限检索确认是否有可对应制度",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 1,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          },
+          {
+            "id": "D02",
+            "title": "员工费用报销制度 B",
+            "version_date": "2026-03-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 1,
+            "preview": "报销期限为费用发生后15天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "读取候选原文核实报销期限及适用范围",
+      "observation": {
+        "ok": true,
+        "document": {
+          "id": "D01",
+          "title": "员工费用报销制度 A",
+          "version_date": "2026-01-01",
+          "scope": "适用部门与优先级尚未提供",
+          "text": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "read",
+      "args": {
+        "doc_id": "D02"
+      },
+      "reason": "读取另一冲突候选原文以核对差异与优先依据",
+      "observation": {
+        "ok": true,
+        "document": {
+          "id": "D02",
+          "title": "员工费用报销制度 B",
+          "version_date": "2026-03-01",
+          "scope": "适用部门与优先级尚未提供",
+          "text": "报销期限为费用发生后15天。提交报销时需提供合法发票。"
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "finish",
+      "args": {
+        "status": "needs_clarification",
+        "answer": "关于报销期限，现有两份制度规定不一致：制度 A（2026-01-01）规定“报销期限为费用发生后30天”；制度 B（2026-03-01）规定“报销期限为费用发生后15天”。两份文档均标注“适用部门与优先级尚未提供”，无法判断应适用哪一份。请补充您所属部门或明确适用的制度版本/优先级，我再为您确认具体期限。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "quote": "报销期限为费用发生后30天。"
+          },
+          {
+            "doc_id": "D02",
+            "quote": "报销期限为费用发生后15天。"
+          }
+        ],
+        "gaps": [
+          "缺少所属部门或适用制度版本/优先级信息，无法在冲突规定中确定适用期限"
+        ]
+      },
+      "reason": "两份候选原文期限冲突且无适用范围或优先级依据，需请求确认",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "corpus/documents.json",
+    "sha256": "64dfca9179a14f2d159c7b21d6bcd0143cbd0806acb2ffd6879859439d1ecddb",
+    "failures": {},
+    "max_steps": 10
+  }
+}

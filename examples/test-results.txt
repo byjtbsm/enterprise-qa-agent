@@ -33,9 +33,28 @@ test_submission_formats_verified_repository_metadata (test_delivery.DeliveryTest
 test_submission_refuses_mismatched_remote_commit (test_delivery.DeliveryTests.test_submission_refuses_mismatched_remote_commit) ... ok
 test_submission_refuses_uncommitted_files (test_delivery.DeliveryTests.test_submission_refuses_uncommitted_files) ... ok
 test_tool_exception_is_an_observation_and_model_can_stop (test_delivery.DeliveryTests.test_tool_exception_is_an_observation_and_model_can_stop) ... ok
+test_early_clarification_is_rejected_then_model_can_recover (test_early_finish.EarlyFinishTests.test_early_clarification_is_rejected_then_model_can_recover) ... ok
+test_genuinely_missing_topic_can_clarify_without_citations_after_lookup (test_early_finish.EarlyFinishTests.test_genuinely_missing_topic_can_clarify_without_citations_after_lookup) ... ok
+test_model_receives_early_finish_rejection_as_observation (test_early_finish.EarlyFinishTests.test_model_receives_early_finish_rejection_as_observation) ... ok
+test_search_hit_cannot_be_skipped_before_clarification (test_early_finish.EarlyFinishTests.test_search_hit_cannot_be_skipped_before_clarification) ... ok
+test_unread_conflict_candidate_prevents_definitive_answer (test_early_finish.EarlyFinishTests.test_unread_conflict_candidate_prevents_definitive_answer) ... ok
+test_unsupported_initial_insufficient_evidence_is_rejected (test_early_finish.EarlyFinishTests.test_unsupported_initial_insufficient_evidence_is_rejected) ... ok
+test_deepseek_profile_disables_thinking_and_sets_output_budget (test_model_protocol.ModelProtocolTests.test_deepseek_profile_disables_thinking_and_sets_output_budget) ... ok
+test_empty_content_has_specific_diagnostics_without_reasoning_text (test_model_protocol.ModelProtocolTests.test_empty_content_has_specific_diagnostics_without_reasoning_text) ... ok
+test_full_http_loop_recovers_at_second_response_without_repeating_tool (test_model_protocol.ModelProtocolTests.test_full_http_loop_recovers_at_second_response_without_repeating_tool) ... ok
+test_malformed_envelope_usage_does_not_crash (test_model_protocol.ModelProtocolTests.test_malformed_envelope_usage_does_not_crash) ... ok
+test_malformed_json_reports_position_without_echoing_content (test_model_protocol.ModelProtocolTests.test_malformed_json_reports_position_without_echoing_content) ... ok
+test_one_fenced_json_object_is_accepted (test_model_protocol.ModelProtocolTests.test_one_fenced_json_object_is_accepted) ... ok
+test_prose_is_not_silently_substring_extracted (test_model_protocol.ModelProtocolTests.test_prose_is_not_silently_substring_extracted) ... ok
+test_protocol_failures_count_toward_step_limit (test_model_protocol.ModelProtocolTests.test_protocol_failures_count_toward_step_limit) ... ok
+test_protocol_repair_budget_stops_at_three_failed_calls (test_model_protocol.ModelProtocolTests.test_protocol_repair_budget_stops_at_three_failed_calls) ... ok
+test_provider_specific_fields_are_not_sent_to_other_hosts (test_model_protocol.ModelProtocolTests.test_provider_specific_fields_are_not_sent_to_other_hosts) ... ok
+test_response_failure_types_are_distinct (test_model_protocol.ModelProtocolTests.test_response_failure_types_are_distinct) ... ok
+test_truncation_and_filtering_have_separate_policy (test_model_protocol.ModelProtocolTests.test_truncation_and_filtering_have_separate_policy) ... ok
+test_valid_action_decodes_and_records_metadata (test_model_protocol.ModelProtocolTests.test_valid_action_decodes_and_records_metadata) ... ok
 
 ----------------------------------------------------------------------
-Ran 34 tests in 1.038s
+Ran 53 tests in 2.337s
 
 OK
 

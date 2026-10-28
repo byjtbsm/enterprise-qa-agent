@@ -1,0 +1,22 @@
+{
+  "provenance": "User-supplied actual console output, summarized verbatim where quoted; not reproduced by the assistant environment.",
+  "scenario": "normal corpus question prematurely clarified before any tool call",
+  "command": "python scripts/run.py --mode live --question \"报销期限是多少？\" --data data/normal.json",
+  "reported_result": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "status": "needs_clarification",
+    "answer": "请说明具体是哪类报销（如差旅费、业务招待费、日常费用等）以及您想确认的是“提交报销申请的期限”还是“费用发生后多久内报销”。不同制度可能规定不同，需明确事项后才能查原文。",
+    "citations": [],
+    "gaps": [
+      "未说明报销事项类型",
+      "未明确是报销申请提交期限还是费用发生后的报销时限"
+    ],
+    "steps": 1,
+    "tool_calls": 0,
+    "model_response_id": "0dfae88b-631d-4185-a8e5-e54685ead4e6"
+  },
+  "expected": "Search and read D01, then answer 30 days with an original quote.",
+  "interpretation": "Model API connectivity succeeded, but normal-case behavior failed. The result is not accepted as evidence of a completed ReAct loop.",
+  "fix_verification": "Six deterministic regression tests added; real-model rerun on the user machine is still required."
+}

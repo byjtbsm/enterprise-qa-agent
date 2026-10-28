@@ -13,7 +13,7 @@
   "max_steps": 10,
   "tool_calls": 2,
   "model_calls": [],
-  "duration_ms": 0.33,
+  "duration_ms": 0.18,
   "trace": [
     {
       "step": 1,

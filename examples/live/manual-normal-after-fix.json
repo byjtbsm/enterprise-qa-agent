@@ -1,0 +1,58 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "报销期限是多少？",
+  "history": [],
+  "status": "model_error",
+  "answer": "模型请求失败，任务未完成。",
+  "citations": [],
+  "gaps": [
+    "可用的模型响应"
+  ],
+  "steps": 2,
+  "max_steps": 10,
+  "tool_calls": 1,
+  "model_calls": [
+    {
+      "step": 1,
+      "response_id": "26bce9a5-7f68-44af-8252-f66fae90e20d",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 570,
+        "completion_tokens": 44,
+        "total_tokens": 614
+      }
+    }
+  ],
+  "duration_ms": 1858.32,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "报销期限"
+      },
+      "reason": "先检索报销相关制度原文",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "model_error",
+      "error_type": "ModelError",
+      "error_code": "model_invalid_response"
+    }
+  ]
+}

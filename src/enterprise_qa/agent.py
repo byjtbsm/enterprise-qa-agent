@@ -14,7 +14,7 @@ def validate_finish(args, evidence):
         return 'invalid_finish_lists'
     if not all(isinstance(g, str) and g.strip() for g in args['gaps']):
         return 'invalid_gaps'
-    if (args['status'] == 'answered' or (args['status'] == 'needs_clarification' and evidence)) and not args['citations']:
+    if args['status'] == 'answered' and not args['citations']:
         return 'missing_citations'
     if args['status'] != 'answered' and not args['gaps']:
         return 'missing_gaps'
@@ -26,6 +26,28 @@ def validate_finish(args, evidence):
             return 'invalid_citation_types'
         if doc_id not in evidence or not quote.strip() or quote not in evidence[doc_id]['text']:
             return 'unverified_citation'
+    return None
+
+
+
+def validate_finish_process(args, trace, evidence):
+    """Evidence acquisition guardrails; never choose the model's next action or answer."""
+    tool_steps = [e for e in trace if e.get('action') in ('search', 'read')]
+    if not tool_steps:
+        return {'ok': False, 'error': 'finish_requires_tool_observation',
+                'hint': 'No tool result has been observed. Select search or read yourself before deciding whether to answer or clarify.'}
+    searches = [e['observation'] for e in tool_steps
+                if e.get('action') == 'search' and e.get('observation', {}).get('ok')
+                and 'hits' in e['observation']]
+    latest_hits = searches[-1]['hits'] if searches else []
+    if args['status'] in ('answered', 'needs_clarification') and latest_hits and not evidence:
+        return {'ok': False, 'error': 'read_search_candidates_before_finishing',
+                'hint': 'Search returned candidate documents. Read original text before assuming missing conditions or giving an answer.'}
+    if args['status'] == 'answered':
+        unread = [hit['id'] for hit in latest_hits if hit['id'] not in evidence]
+        if unread:
+            return {'ok': False, 'error': 'unread_search_candidates', 'doc_ids': unread,
+                    'hint': 'Inspect the remaining candidates before making a definitive answer; narrower search is also allowed.'}
     return None
 
 
@@ -45,6 +67,7 @@ def run(model, tools, question, history=None, max_steps=10):
                 {'role': 'user', 'content': json.dumps({'question': question, 'history': history}, ensure_ascii=False)}]
     trace = []
     model_calls = []
+    protocol_repairs = 0
     started = time.monotonic()
     def result(status, answer, gaps, citations=None):
         return {'mode': model.mode, 'model': model.name, 'question': question, 'history': history,
@@ -60,9 +83,29 @@ def run(model, tools, question, history=None, max_steps=10):
                 model_calls.append({'step': step, **model.last_call})
         except Exception as exc:
             # Do not serialize provider response bodies, URLs, credentials or arbitrary exception strings.
-            trace.append({'step': step, 'action': 'model_error', 'error_type': type(exc).__name__,
-                          'error_code': exc.code if isinstance(exc, ModelError) else 'model_request_failed'})
-            return result('model_error', '模型请求失败，任务未完成。', ['可用的模型响应'])
+            if getattr(model, 'last_call', None):
+                model_calls.append({'step': step, **model.last_call})
+            entry = {'step': step, 'action': 'model_error', 'error_type': type(exc).__name__,
+                     'error_code': exc.code if isinstance(exc, ModelError) else 'model_request_failed'}
+            if isinstance(exc, ModelError):
+                entry['diagnostics'] = exc.diagnostics
+            if isinstance(exc, ModelError) and exc.retryable:
+                if step == max_steps:
+                    entry['recovery'] = 'step_limit_reached'
+                    trace.append(entry)
+                    break
+                if protocol_repairs < 2:
+                    protocol_repairs += 1
+                    entry['recovery'] = 'request_valid_action_again'
+                    entry['repair_attempt'] = protocol_repairs
+                    trace.append(entry)
+                    feedback = {'ok': False, 'error': exc.code,
+                        'hint': '上一轮未得到可执行的 JSON 动作。本轮只输出一个 action/args/reason JSON 对象。已有工具观察仍然有效，依据它们自行选择下一步，不要输出解释、代码围栏或空白。'}
+                    messages.append({'role': 'user', 'content': json.dumps(feedback, ensure_ascii=False)})
+                    continue
+                entry['recovery'] = 'protocol_repair_budget_exhausted'
+            trace.append(entry)
+            return result('model_error', '模型请求或响应协议失败，任务未完成。', ['可执行的模型 JSON 动作'])
         if (not isinstance(decision, dict) or set(decision) != {'action', 'args', 'reason'}
                 or not isinstance(decision.get('action'), str)
                 or not isinstance(decision.get('args'), dict)
@@ -75,11 +118,12 @@ def run(model, tools, question, history=None, max_steps=10):
         entry = {'step': step, 'action': name, 'args': args, 'reason': decision['reason']}
         if name == 'finish':
             error = validate_finish(args, tools.read_evidence)
-            if not error:
+            process_error = validate_finish_process(args, trace, tools.read_evidence) if not error else None
+            if not error and not process_error:
                 entry['observation'] = {'ok': True, 'accepted': True}
                 trace.append(entry)
                 return result(args['status'], args['answer'], args['gaps'], args['citations'])
-            observation = {'ok': False, 'error': error}
+            observation = process_error or {'ok': False, 'error': error}
         else:
             try:
                 observation = tools.execute(name, args)

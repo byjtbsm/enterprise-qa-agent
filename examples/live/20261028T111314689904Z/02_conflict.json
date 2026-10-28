@@ -1,0 +1,179 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "报销期限是多少？",
+  "history": [],
+  "status": "needs_clarification",
+  "answer": "现有两份报销制度对报销期限规定不一致：制度A规定费用发生后30天，制度B规定为费用发生后15天，且两份均未提供适用部门或优先级说明，无法确定适用哪一个。请确认您适用的部门或应遵循的制度版本。",
+  "citations": [
+    {
+      "doc_id": "D01",
+      "quote": "报销期限为费用发生后30天。"
+    },
+    {
+      "doc_id": "D02",
+      "quote": "报销期限为费用发生后15天。"
+    }
+  ],
+  "gaps": [
+    "两份制度的适用部门及优先级依据"
+  ],
+  "steps": 4,
+  "max_steps": 10,
+  "tool_calls": 3,
+  "model_calls": [
+    {
+      "step": 1,
+      "http_status": 200,
+      "response_bytes": 588,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "a90d7826-532a-4b0b-be0e-fe201b3bb9ae",
+      "usage": {
+        "prompt_tokens": 545,
+        "completion_tokens": 26,
+        "total_tokens": 571
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 2,
+      "http_status": 200,
+      "response_bytes": 581,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "604d0df8-0445-47b3-a811-efa647d2d8d5",
+      "usage": {
+        "prompt_tokens": 734,
+        "completion_tokens": 31,
+        "total_tokens": 765
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 3,
+      "http_status": 200,
+      "response_bytes": 575,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "cb6adc37-b433-4757-bab2-c9543b2e5ef9",
+      "usage": {
+        "prompt_tokens": 838,
+        "completion_tokens": 30,
+        "total_tokens": 868
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 4,
+      "http_status": 200,
+      "response_bytes": 1146,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "0870bfb2-1d66-4bba-8f75-0561b69f334f",
+      "usage": {
+        "prompt_tokens": 941,
+        "completion_tokens": 158,
+        "total_tokens": 1099
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "duration_ms": 4725.66,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "报销期限"
+      },
+      "reason": "问题已明确报销事项，先检索报销制度",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          },
+          {
+            "id": "D02",
+            "title": "员工费用报销制度 B",
+            "version_date": "2026-03-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后15天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "两个报销期限冲突，需读取原文判断",
+      "observation": {
+        "ok": true,
+        "document": {
+          "id": "D01",
+          "title": "员工费用报销制度 A",
+          "version_date": "2026-01-01",
+          "scope": "适用部门与优先级尚未提供",
+          "text": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "read",
+      "args": {
+        "doc_id": "D02"
+      },
+      "reason": "需读取另一冲突候选原文再判断",
+      "observation": {
+        "ok": true,
+        "document": {
+          "id": "D02",
+          "title": "员工费用报销制度 B",
+          "version_date": "2026-03-01",
+          "scope": "适用部门与优先级尚未提供",
+          "text": "报销期限为费用发生后15天。提交报销时需提供合法发票。"
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "finish",
+      "args": {
+        "status": "needs_clarification",
+        "answer": "现有两份报销制度对报销期限规定不一致：制度A规定费用发生后30天，制度B规定为费用发生后15天，且两份均未提供适用部门或优先级说明，无法确定适用哪一个。请确认您适用的部门或应遵循的制度版本。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "quote": "报销期限为费用发生后30天。"
+          },
+          {
+            "doc_id": "D02",
+            "quote": "报销期限为费用发生后15天。"
+          }
+        ],
+        "gaps": [
+          "两份制度的适用部门及优先级依据"
+        ]
+      },
+      "reason": "原文冲突且无适用范围或优先级依据，需请求确认",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "corpus/documents.json",
+    "sha256": "64dfca9179a14f2d159c7b21d6bcd0143cbd0806acb2ffd6879859439d1ecddb",
+    "failures": {},
+    "max_steps": 10
+  }
+}

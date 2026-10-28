@@ -1,0 +1,69 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "报销期限是多少？",
+  "history": [],
+  "status": "incomplete",
+  "answer": "达到执行步数上限，任务未完成。",
+  "citations": [],
+  "gaps": [
+    "在步数限制内完成的核验结果"
+  ],
+  "steps": 1,
+  "max_steps": 1,
+  "tool_calls": 1,
+  "model_calls": [
+    {
+      "step": 1,
+      "http_status": 200,
+      "response_bytes": 594,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "0e926d70-8429-48fe-b03f-a1b6fcd06816",
+      "usage": {
+        "prompt_tokens": 545,
+        "completion_tokens": 27,
+        "total_tokens": 572
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "duration_ms": 763.58,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "报销期限"
+      },
+      "reason": "问题已给出报销事项，先检索相关制度原文",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          },
+          {
+            "id": "D02",
+            "title": "员工费用报销制度 B",
+            "version_date": "2026-03-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后15天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    }
+  ],
+  "fixture": {
+    "data": "corpus/documents.json",
+    "sha256": "64dfca9179a14f2d159c7b21d6bcd0143cbd0806acb2ffd6879859439d1ecddb",
+    "failures": {},
+    "max_steps": 1
+  }
+}

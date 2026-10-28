@@ -1,0 +1,128 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "垫付之后最迟何时能报账？",
+  "history": [],
+  "status": "answered",
+  "answer": "根据《员工费用报销制度 A》，报销期限为费用发生后30天，即垫付后最迟应在费用发生之日起30天内报账；提交报销时需提供合法发票。",
+  "citations": [
+    {
+      "doc_id": "D01",
+      "quote": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+    }
+  ],
+  "gaps": [],
+  "steps": 3,
+  "max_steps": 10,
+  "tool_calls": 2,
+  "model_calls": [
+    {
+      "step": 1,
+      "http_status": 200,
+      "response_bytes": 584,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "0f33e9ce-be3b-40d6-8f74-5996f53f815c",
+      "usage": {
+        "prompt_tokens": 551,
+        "completion_tokens": 30,
+        "total_tokens": 581
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 2,
+      "http_status": 200,
+      "response_bytes": 575,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "0fbec899-e67d-4458-869b-796195608b24",
+      "usage": {
+        "prompt_tokens": 676,
+        "completion_tokens": 29,
+        "total_tokens": 705
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 3,
+      "http_status": 200,
+      "response_bytes": 935,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "b4196aea-c23e-4e5f-8659-00748af1b4c9",
+      "usage": {
+        "prompt_tokens": 778,
+        "completion_tokens": 115,
+        "total_tokens": 893
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "duration_ms": 3392.69,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "垫付 报账 期限"
+      },
+      "reason": "先检索垫付报账期限相关制度",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 1,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "读取报销制度原文确认期限条款",
+      "observation": {
+        "ok": true,
+        "document": {
+          "id": "D01",
+          "title": "员工费用报销制度 A",
+          "version_date": "2026-01-01",
+          "scope": "适用部门与优先级尚未提供",
+          "text": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "finish",
+      "args": {
+        "status": "answered",
+        "answer": "根据《员工费用报销制度 A》，报销期限为费用发生后30天，即垫付后最迟应在费用发生之日起30天内报账；提交报销时需提供合法发票。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "quote": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          }
+        ],
+        "gaps": []
+      },
+      "reason": "已读取报销制度原文，期限条款明确",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "corpus/normal.json",
+    "sha256": "4618419c1c146896c813343ad56d9f6871515cb651eb0c1d80e1ec2350cb1db0",
+    "failures": {},
+    "max_steps": 10
+  }
+}

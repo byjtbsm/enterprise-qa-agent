@@ -1,0 +1,175 @@
+{
+  "mode": "live",
+  "model": "deepseek-flash",
+  "question": "报销期限是多少？",
+  "history": [],
+  "status": "answered",
+  "answer": "两份现行员工费用报销制度均规定：报销期限为费用发生后30天，提交报销时需提供合法发票。",
+  "citations": [
+    {
+      "doc_id": "D01",
+      "quote": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+    },
+    {
+      "doc_id": "D02",
+      "quote": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+    }
+  ],
+  "gaps": [],
+  "steps": 4,
+  "max_steps": 10,
+  "tool_calls": 3,
+  "model_calls": [
+    {
+      "step": 1,
+      "http_status": 200,
+      "response_bytes": 582,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "04e23275-15ff-415f-8c29-2d12b1469577",
+      "usage": {
+        "prompt_tokens": 545,
+        "completion_tokens": 24,
+        "total_tokens": 569
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 2,
+      "http_status": 200,
+      "response_bytes": 569,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "3fc5c9b2-4ca4-4195-95a5-f43b1a12cbea",
+      "usage": {
+        "prompt_tokens": 732,
+        "completion_tokens": 24,
+        "total_tokens": 756
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 3,
+      "http_status": 200,
+      "response_bytes": 581,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "9076ea3b-ef62-432c-87e5-6f39a813e7cf",
+      "usage": {
+        "prompt_tokens": 834,
+        "completion_tokens": 30,
+        "total_tokens": 864
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "step": 4,
+      "http_status": 200,
+      "response_bytes": 986,
+      "request_profile": "deepseek_non_thinking_json",
+      "response_id": "4b446e55-8672-4f24-a32a-fdeccb3dfdd9",
+      "usage": {
+        "prompt_tokens": 937,
+        "completion_tokens": 128,
+        "total_tokens": 1065
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "duration_ms": 3896.91,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "报销期限"
+      },
+      "reason": "先检索报销制度中关于期限的规定",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          },
+          {
+            "id": "D02",
+            "title": "员工费用报销制度 B",
+            "version_date": "2026-03-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "读取候选制度原文核实报销期限",
+      "observation": {
+        "ok": true,
+        "document": {
+          "id": "D01",
+          "title": "员工费用报销制度 A",
+          "version_date": "2026-01-01",
+          "scope": "适用部门与优先级尚未提供",
+          "text": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "read",
+      "args": {
+        "doc_id": "D02"
+      },
+      "reason": "读取另一候选制度原文比对是否冲突",
+      "observation": {
+        "ok": true,
+        "document": {
+          "id": "D02",
+          "title": "员工费用报销制度 B",
+          "version_date": "2026-03-01",
+          "scope": "适用部门与优先级尚未提供",
+          "text": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "finish",
+      "args": {
+        "status": "answered",
+        "answer": "两份现行员工费用报销制度均规定：报销期限为费用发生后30天，提交报销时需提供合法发票。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "quote": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          },
+          {
+            "doc_id": "D02",
+            "quote": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          }
+        ],
+        "gaps": []
+      },
+      "reason": "两份原文一致，可据此答复",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "corpus/resolved.json",
+    "sha256": "d37f9e75efd1f4647d861202677842e9a950f03a539cc46637f4e5f43bd97b47",
+    "failures": {},
+    "max_steps": 10
+  }
+}
