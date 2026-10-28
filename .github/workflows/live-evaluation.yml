@@ -1,0 +1,50 @@
+name: Live model acceptance
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: live-evaluation-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Run tests
+        run: python scripts/test.py
+      - name: Execute real model acceptance cases
+        id: live
+        env:
+          MODEL_API_KEY: ${{ secrets.MODEL_API_KEY }}
+          MODEL_BASE_URL: ${{ vars.MODEL_BASE_URL }}
+          MODEL_NAME: ${{ vars.MODEL_NAME }}
+          MODEL_TIMEOUT: '45'
+        run: python scripts/evaluate.py --mode live
+      - name: Validate live evidence
+        if: success()
+        run: python scripts/audit.py --require-live
+      - name: Preserve evidence even when validation fails
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: live-evidence-${{ github.run_id }}
+          if-no-files-found: warn
+          path: |
+            examples/live/
+            examples/test-results.txt
+      - name: Commit generated evidence into this repository
+        if: always()
+        shell: bash
+        run: |
+          if [ ! -d examples/live ]; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add examples/live examples/test-results.txt
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record actual live model evaluation evidence"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

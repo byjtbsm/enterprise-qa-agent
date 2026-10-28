@@ -21,7 +21,8 @@
   "steps": 4,
   "max_steps": 10,
   "tool_calls": 3,
-  "duration_ms": 0.17,
+  "model_calls": [],
+  "duration_ms": 0.57,
   "trace": [
     {
       "step": 1,
@@ -117,7 +118,8 @@
     }
   ],
   "fixture": {
-    "data": "data/documents.json",
+    "data": "corpus/documents.json",
+    "sha256": "64dfca9179a14f2d159c7b21d6bcd0143cbd0806acb2ffd6879859439d1ecddb",
     "failures": {},
     "max_steps": 10
   }

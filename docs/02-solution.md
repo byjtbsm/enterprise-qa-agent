@@ -36,7 +36,7 @@
 
 模型接入采用 JSON 动作协议而非原生 function calling，以便复用同一个运行时校验器。供应商须支持 Chat Completions 和 JSON object 模式；当前只做本地伪服务协议测试，尚未实测外部供应商。
 
-每次决定计入一步，工具调用最多等于 max_steps，默认 10。无隐式无限重试。单次网络调用有超时；无严格的总墙钟时间限制和 token/费用预算。无自动 Mock 降级。
+每次决定计入一步，工具调用最多等于 max_steps，默认 10。无隐式无限重试。单次网络调用默认 45 秒超时；无严格的总墙钟时间限制和 token/费用预算。无自动 Mock 降级。
 
 ## 协议参考
 
@@ -46,3 +46,9 @@
 - https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=chat
 
 这里只使用 Chat Completions 的 messages 和 JSON object 输出能力；不是对所有模型兼容性的承诺。
+
+## 验收与提交工程
+
+新增 configure.py 隐藏密钥配置、test.py 保存真实测试输出、evaluate.py 保存原文快照/源码摘要和模型响应元数据、audit.py 检查真实证据与个人核验状态、submission.py 验证远程 main 后输出提交信息。
+
+普通 push/PR 只触发离线 CI；workflow_dispatch 手动触发真实模型工作流。后者使用 GitHub Secret，保留成功及失败记录，并在权限允许时提交回同一仓库。工作流配置已经本地检查，远程执行结果须以用户实际 GitHub Actions 运行为准。

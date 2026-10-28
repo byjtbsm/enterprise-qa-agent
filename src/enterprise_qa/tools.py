@@ -14,10 +14,18 @@ def tokens(text):
 
 class Tools:
     def __init__(self, documents, failures=None):
-        self.docs = {d['id']: d for d in documents}
+        fields = {'id', 'title', 'version_date', 'scope', 'text'}
+        if not isinstance(documents, list) or not all(
+            isinstance(d, dict) and fields <= set(d) and
+            all(isinstance(d[k], str) and d[k].strip() for k in fields) for d in documents
+        ):
+            raise ValueError('documents must be a list with non-empty id/title/version_date/scope/text')
+        self.docs = {d['id']: dict(d) for d in documents}
         if len(self.docs) != len(documents):
             raise ValueError('duplicate document IDs')
         self.failures = dict(failures or {})
+        if any(k not in ('read', 'search') or type(v) is not int or v < 0 for k, v in self.failures.items()):
+            raise ValueError('failure counts must be non-negative integers for read/search')
         self.read_evidence = {}
 
     @classmethod

@@ -1,0 +1,32 @@
+name: Offline CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Run executable tests
+        run: python scripts/test.py
+      - name: Execute offline acceptance cases
+        run: python scripts/evaluate.py --mode mock
+      - name: Check submission structure
+        run: python scripts/audit.py
+      - name: Preserve actual evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: offline-evidence-python-${{ matrix.python }}
+          path: |
+            examples/test-results.txt
+            examples/mock/

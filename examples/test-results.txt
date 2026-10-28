@@ -18,9 +18,24 @@ test_system_role_not_allowed_in_history (test_agent.AgentTests.test_system_role_
 test_tool_argument_validation (test_agent.AgentTests.test_tool_argument_validation) ... ok
 test_unknown_tool_is_rejected (test_agent.AgentTests.test_unknown_tool_is_rejected) ... ok
 test_unread_citation_is_rejected (test_agent.AgentTests.test_unread_citation_is_rejected) ... ok
+test_all_eleven_cases_pass_behavior_checks (test_delivery.DeliveryTests.test_all_eleven_cases_pass_behavior_checks) ... ok
+test_bad_env_does_not_expose_secret (test_delivery.DeliveryTests.test_bad_env_does_not_expose_secret) ... ok
+test_bad_history_shapes_are_configuration_errors (test_delivery.DeliveryTests.test_bad_history_shapes_are_configuration_errors) ... ok
+test_document_schema_is_validated (test_delivery.DeliveryTests.test_document_schema_is_validated) ... ok
+test_env_loader_does_not_execute_or_expand_values (test_delivery.DeliveryTests.test_env_loader_does_not_execute_or_expand_values) ... ok
+test_environment_overrides_local_env (test_delivery.DeliveryTests.test_environment_overrides_local_env) ... ok
+test_full_http_stub_loop_receives_actual_observations (test_delivery.DeliveryTests.test_full_http_stub_loop_receives_actual_observations) ... ok
+test_http_401_is_classified_without_echoing_body (test_delivery.DeliveryTests.test_http_401_is_classified_without_echoing_body) ... ok
+test_live_audit_rejects_mock_evidence (test_delivery.DeliveryTests.test_live_audit_rejects_mock_evidence) ... ok
+test_malformed_status_is_rejected_without_crash (test_delivery.DeliveryTests.test_malformed_status_is_rejected_without_crash) ... ok
+test_model_configuration_rejects_unsafe_or_invalid_fields (test_delivery.DeliveryTests.test_model_configuration_rejects_unsafe_or_invalid_fields) ... ok
+test_submission_formats_verified_repository_metadata (test_delivery.DeliveryTests.test_submission_formats_verified_repository_metadata) ... ok
+test_submission_refuses_mismatched_remote_commit (test_delivery.DeliveryTests.test_submission_refuses_mismatched_remote_commit) ... ok
+test_submission_refuses_uncommitted_files (test_delivery.DeliveryTests.test_submission_refuses_uncommitted_files) ... ok
+test_tool_exception_is_an_observation_and_model_can_stop (test_delivery.DeliveryTests.test_tool_exception_is_an_observation_and_model_can_stop) ... ok
 
 ----------------------------------------------------------------------
-Ran 19 tests in 0.511s
+Ran 34 tests in 1.038s
 
 OK
 

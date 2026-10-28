@@ -5,6 +5,7 @@ from pathlib import Path
 from .agent import run
 from .models import LiveModel, OfflineMock
 from .tools import Tools
+from .config import load_env
 
 
 def main():
@@ -19,6 +20,8 @@ def main():
     parser.add_argument('--fail-read', type=int, default=0, help='Inject N initial read failures')
     args = parser.parse_args()
     try:
+        if args.mode == 'live':
+            load_env()
         model = LiveModel() if args.mode == 'live' else OfflineMock()
         tools = Tools.load(args.data, {'search': args.fail_search, 'read': args.fail_read})
         history = json.loads(Path(args.history).read_text(encoding='utf-8')) if args.history else []

@@ -1,6 +1,6 @@
 import json
 import time
-from .models import SYSTEM
+from .models import SYSTEM, ModelError
 
 STATUSES = {'answered', 'needs_clarification', 'insufficient_evidence', 'tool_error'}
 
@@ -32,29 +32,36 @@ def validate_finish(args, evidence):
 def run(model, tools, question, history=None, max_steps=10):
     if not isinstance(question, str) or not question.strip():
         raise ValueError('question must not be empty')
-    if not 1 <= max_steps <= 50:
+    if type(max_steps) is not int or not 1 <= max_steps <= 50:
         raise ValueError('max_steps must be between 1 and 50')
     tools.read_evidence.clear()  # Evidence must be obtained in this run.
-    history = history or []
+    history = [] if history is None else history
+    if not isinstance(history, list):
+        raise ValueError('history must be a list')
     for item in history:
-        if set(item) != {'role', 'content'} or item['role'] not in ('user', 'assistant') or not isinstance(item['content'], str):
+        if not isinstance(item, dict) or set(item) != {'role', 'content'} or item['role'] not in ('user', 'assistant') or not isinstance(item['content'], str):
             raise ValueError('history must contain user/assistant text messages')
     messages = [{'role': 'system', 'content': SYSTEM},
                 {'role': 'user', 'content': json.dumps({'question': question, 'history': history}, ensure_ascii=False)}]
     trace = []
+    model_calls = []
     started = time.monotonic()
     def result(status, answer, gaps, citations=None):
         return {'mode': model.mode, 'model': model.name, 'question': question, 'history': history,
                 'status': status, 'answer': answer, 'citations': citations or [], 'gaps': gaps,
                 'steps': len(trace), 'max_steps': max_steps,
                 'tool_calls': sum(e.get('action') in ('search', 'read') for e in trace),
+                'model_calls': model_calls,
                 'duration_ms': round((time.monotonic()-started)*1000, 2), 'trace': trace}
     for step in range(1, max_steps+1):
         try:
             decision = model.decide(messages)
+            if getattr(model, 'last_call', None):
+                model_calls.append({'step': step, **model.last_call})
         except Exception as exc:
             # Do not serialize provider response bodies, URLs, credentials or arbitrary exception strings.
-            trace.append({'step': step, 'action': 'model_error', 'error_type': type(exc).__name__})
+            trace.append({'step': step, 'action': 'model_error', 'error_type': type(exc).__name__,
+                          'error_code': exc.code if isinstance(exc, ModelError) else 'model_request_failed'})
             return result('model_error', '模型请求失败，任务未完成。', ['可用的模型响应'])
         if (not isinstance(decision, dict) or set(decision) != {'action', 'args', 'reason'}
                 or not isinstance(decision.get('action'), str)
@@ -74,7 +81,10 @@ def run(model, tools, question, history=None, max_steps=10):
                 return result(args['status'], args['answer'], args['gaps'], args['citations'])
             observation = {'ok': False, 'error': error}
         else:
-            observation = tools.execute(name, args)
+            try:
+                observation = tools.execute(name, args)
+            except Exception:
+                observation = {'ok': False, 'error': 'tool_execution_exception', 'retryable': False}
         entry['observation'] = observation
         trace.append(entry)
         messages.extend([{'role': 'assistant', 'content': json.dumps(decision, ensure_ascii=False)},
