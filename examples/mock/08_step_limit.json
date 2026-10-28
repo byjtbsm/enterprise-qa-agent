@@ -1,0 +1,53 @@
+{
+  "mode": "mock",
+  "model": "deterministic-offline-fixture-v1",
+  "question": "报销期限是多少？",
+  "history": [],
+  "status": "incomplete",
+  "answer": "达到执行步数上限，任务未完成。",
+  "citations": [],
+  "gaps": [
+    "在步数限制内完成的核验结果"
+  ],
+  "steps": 1,
+  "max_steps": 1,
+  "tool_calls": 1,
+  "duration_ms": 0.08,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "报销期限是多少？"
+      },
+      "reason": "先检索用户问题；离线规则模拟",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          },
+          {
+            "id": "D02",
+            "title": "员工费用报销制度 B",
+            "version_date": "2026-03-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后15天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    }
+  ],
+  "fixture": {
+    "data": "data/documents.json",
+    "failures": {},
+    "max_steps": 1
+  }
+}

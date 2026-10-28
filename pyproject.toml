@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-evidence-qa"
+version = "0.1.0"
+description = "Evidence-first enterprise QA agent, campus assessment project 3"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+enterprise-qa = "enterprise_qa.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

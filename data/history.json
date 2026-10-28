@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "我想了解报销制度。"
+  },
+  {
+    "role": "assistant",
+    "content": "你想了解报销的哪个方面？"
+  }
+]

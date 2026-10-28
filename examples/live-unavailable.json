@@ -1,0 +1,7 @@
+{
+  "command": "python scripts/run.py --mode live --question \"报销期限是多少？\"",
+  "exit_code": 2,
+  "stdout": "",
+  "stderr": "{\"status\": \"configuration_error\", \"error\": \"live mode requires MODEL_API_KEY and MODEL_NAME; no automatic Mock fallback\"}\n",
+  "note": "No credentials configured; no request sent to an actual model."
+}

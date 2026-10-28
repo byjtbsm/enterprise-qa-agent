@@ -1,0 +1,23 @@
+{
+  "build_started_utc": "2026-10-28T06:43:27+00:00",
+  "build_recorded_utc": "2026-10-28T06:52:38.530981+00:00",
+  "elapsed_minutes_to_record": 9.19,
+  "time_scope": "AI-assisted implementation and checks in this environment; excludes candidate work, real model verification and future GitHub publication",
+  "python": "3.12.14",
+  "test_methods_passed": 19,
+  "mock_scenarios_passed": 9,
+  "live_model_verified": false,
+  "remote_repository_created": false,
+  "checks": [
+    "unittest suite",
+    "mock scenario evaluation",
+    "CLI normal/conflict/limit smoke",
+    "compileall",
+    "Markdown local links"
+  ],
+  "remaining": [
+    "real model traces and semantic review",
+    "candidate personal contribution and time",
+    "GitHub URL and pushed final commit SHA"
+  ]
+}

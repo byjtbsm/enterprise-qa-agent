@@ -1,0 +1,40 @@
+{
+  "mode": "mock",
+  "model": "deterministic-offline-fixture-v1",
+  "question": "期限是多久？",
+  "history": [],
+  "status": "needs_clarification",
+  "answer": "请问你想了解哪项制度的期限？",
+  "citations": [],
+  "gaps": [
+    "所询问的制度或业务事项"
+  ],
+  "steps": 1,
+  "max_steps": 10,
+  "tool_calls": 0,
+  "duration_ms": 0.01,
+  "trace": [
+    {
+      "step": 1,
+      "action": "finish",
+      "args": {
+        "status": "needs_clarification",
+        "answer": "请问你想了解哪项制度的期限？",
+        "citations": [],
+        "gaps": [
+          "所询问的制度或业务事项"
+        ]
+      },
+      "reason": "依据已观察结果结束；离线规则模拟",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "data/documents.json",
+    "failures": {},
+    "max_steps": 10
+  }
+}

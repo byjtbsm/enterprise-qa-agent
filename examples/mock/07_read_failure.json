@@ -1,0 +1,90 @@
+{
+  "mode": "mock",
+  "model": "deterministic-offline-fixture-v1",
+  "question": "报销期限是多少？",
+  "history": [],
+  "status": "tool_error",
+  "answer": "工具持续失败，无法核实原文。",
+  "citations": [],
+  "gaps": [
+    "可用的检索或读取结果"
+  ],
+  "steps": 4,
+  "max_steps": 10,
+  "tool_calls": 3,
+  "duration_ms": 0.2,
+  "trace": [
+    {
+      "step": 1,
+      "action": "search",
+      "args": {
+        "query": "报销期限是多少？"
+      },
+      "reason": "先检索用户问题；离线规则模拟",
+      "observation": {
+        "ok": true,
+        "hits": [
+          {
+            "id": "D01",
+            "title": "员工费用报销制度 A",
+            "version_date": "2026-01-01",
+            "scope": "适用部门与优先级尚未提供",
+            "score": 3,
+            "preview": "报销期限为费用发生后30天。提交报销时需提供合法发票。"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "step": 2,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "读取候选原文以核验事实及冲突；离线规则模拟",
+      "observation": {
+        "ok": false,
+        "error": "injected_tool_failure",
+        "retryable": true
+      }
+    },
+    {
+      "step": 3,
+      "action": "read",
+      "args": {
+        "doc_id": "D01"
+      },
+      "reason": "观察到临时失败，尝试一次恢复；离线规则模拟",
+      "observation": {
+        "ok": false,
+        "error": "injected_tool_failure",
+        "retryable": true
+      }
+    },
+    {
+      "step": 4,
+      "action": "finish",
+      "args": {
+        "status": "tool_error",
+        "answer": "工具持续失败，无法核实原文。",
+        "citations": [],
+        "gaps": [
+          "可用的检索或读取结果"
+        ]
+      },
+      "reason": "依据已观察结果结束；离线规则模拟",
+      "observation": {
+        "ok": true,
+        "accepted": true
+      }
+    }
+  ],
+  "fixture": {
+    "data": "data/normal.json",
+    "failures": {
+      "read": 2
+    },
+    "max_steps": 10
+  }
+}
